@@ -223,6 +223,27 @@ price_by_renewables <- price_by_renewables %>%
 
 ## Residential Electricity Price
 
+```{r}
+states_map <- map_data("state")
+
+renewable_map <- sector_prices %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = region,
+               fill = Percent,
+               group = Year)) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map() +
+  labs(title = "Percent Renewable Energy Mix per State", fill = "Percent", subtitle = "Year: {previous_state}") +
+    scale_fill_continuous(low = "#edf6b2" , high = "#1c5f07") +
+  transition_states(Year)
+
+renewable_map <- animate(renewable_map, duration = 20, end_pause = 20)
+
+renewable_map
+```
+
+
 ## Percent Renewables Energy Mix
 
 ```{r}

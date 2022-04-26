@@ -13,7 +13,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
 ```
 
-```{r libraries}
+```{r libraries, echo = False}
 library(tidyverse)     # for graphing and data cleaning
 library(lubridate)     # for date manipulation
 library(ggthemes)      # for even more plotting themes
@@ -32,7 +32,7 @@ theme_set(theme_minimal()) # My favorite ggplot() theme :)
 
 ### Data Cleaning
 
-```{r}
+```{r, echo = False}
 # Data cleaning 
 
 # Electricity Price Clean
@@ -198,7 +198,7 @@ price_by_renewables <- percent_renewable %>%
 ```
 
 
-```{r}
+```{r,echo = FALSE}
 # initial datasets to work with 
 
 state_abbreve <- tibble(state.abb, state.name) %>% 
@@ -223,7 +223,7 @@ price_by_renewables <- price_by_renewables %>%
 
 ## Residential Electricity Price
 
-```{r}
+```{r, echo=FALSE}
 states_map <- map_data("state")
 
 renewable_map <- sector_prices %>% 
@@ -246,7 +246,7 @@ renewable_map
 
 ## Percent Renewables Energy Mix
 
-```{r}
+```{r, echo=FALSE}
 # Map showing change in percent renewable over time
 
 states_map <- map_data("state")

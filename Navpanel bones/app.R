@@ -1,6 +1,5 @@
 
 
-#library("shiny.router")
 library(shiny)
 library(tidyverse)
 library(rsconnect)
@@ -13,7 +12,12 @@ ui <- fluidPage(
                             p("Lit Reveiw"),
                             p("Methods and Analysis"),
                             p("Conclusdion and Results")),
-                   tabPanel("Analysis"),
+                   tabPanel("Analysis",
+                            
+                            #YOUR PAGE COMPONENETS HERE
+                            
+                            
+                            ),
                    tabPanel("Extra")
   ))
 

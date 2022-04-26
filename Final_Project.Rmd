@@ -10,19 +10,29 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, error=TRUE, message=FALSE, warning=FALSE)
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
 ```
 
-```{r libraries}
+```{r libraries, echo = False}
 library(tidyverse)     # for graphing and data cleaning
 library(lubridate)     # for date manipulation
 library(ggthemes)      # for even more plotting themes
 library(gganimate)
+library(ggmap)         # for mapping points on maps
 theme_set(theme_minimal()) # My favorite ggplot() theme :)
 ```
 
+# Title 
 
-```{r}
+# Introduction and Background
+
+# Data Collection 
+
+# Analysis 
+
+### Data Cleaning
+
+```{r, echo = False}
 # Data cleaning 
 
 # Electricity Price Clean
@@ -188,11 +198,75 @@ price_by_renewables <- percent_renewable %>%
 ```
 
 
-```{r}
+```{r,echo = FALSE}
 # initial datasets to work with 
 
+state_abbreve <- tibble(state.abb, state.name) %>% 
+  mutate(region = str_to_lower(state.name),
+         State = state.abb) %>% 
+  select(c(State, region))
+
 # sector_prices - just electricity prices by sector
+sector_prices <- sector_prices %>% 
+  left_join(state_abbreve, by = 'State')
+
 # percent_renewable - just renewable
+
+percent_renewable <- percent_renewable %>% 
+  left_join(state_abbreve, by = 'State')
+
 # price_by_renewables - combined, only years: 04, 05, 07, 09, 10, 12, 14, 16, 18, 19
+
+price_by_renewables <- price_by_renewables %>% 
+  left_join(state_abbreve, by = 'State')
 ```
 
+## Residential Electricity Price
+
+```{r, echo=FALSE}
+states_map <- map_data("state")
+
+renewable_map <- sector_prices %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = region,
+               fill = Percent,
+               group = Year)) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map() +
+  labs(title = "Percent Renewable Energy Mix per State", fill = "Percent", subtitle = "Year: {previous_state}") +
+    scale_fill_continuous(low = "#edf6b2" , high = "#1c5f07") +
+  transition_states(Year)
+
+renewable_map <- animate(renewable_map, duration = 20, end_pause = 20)
+
+renewable_map
+```
+
+
+## Percent Renewables Energy Mix
+
+```{r, echo=FALSE}
+# Map showing change in percent renewable over time
+
+states_map <- map_data("state")
+
+renewable_map <- percent_renewable %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = region,
+               fill = Percent,
+               group = Year)) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map() +
+  labs(title = "Percent Renewable Energy Mix per State", fill = "Percent", subtitle = "Year: {previous_state}") +
+    scale_fill_continuous(low = "#edf6b2" , high = "#1c5f07") +
+  transition_states(Year)
+
+renewable_map <- animate(renewable_map, duration = 20, end_pause = 20)
+
+renewable_map
+```
+
+
+## Electricity Price vs. Percent Renewables

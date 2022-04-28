@@ -195,10 +195,34 @@ states_map <- map_data("state")
 
 
 ui <- navbarPage("My Application",
-                   tabPanel("Written Summary",p("Intro"),
-                            p("Lit Reveiw"),
-                            p("Methods and Analysis"),
-                            p("Conclusdion and Results")),
+                 tags$style(type = 'text/css', 
+                            HTML(".container-fluid > .nav > li > 
+                        a[data-value='Written Summary'] {background-color: grey; color:black}",
+                                 ".container-fluid > .nav > li > 
+                        a[data-value='Analysis'] {background-color: grey; color:black}" )),
+                   tabPanel("Written Summary",
+                            h2("Renewable Energy of the Ages",align = "center"),
+                            h3("A United States Clean Energy Story", align="center"
+),
+                            h5("Introduction and Background", align = "center"),
+p(""),
+                   p("For our project, we explored generation of electricity in United States, with a specific focus on renewable sources of energy. Renewable Sources include wind, solar, geothermal, and hydroelectric energy sources. There are many other energy sources such as energy from coal, natural gas and nuclear. Each state in US has its own supply and demand for electircity, and must determine what energy sources will help meet their demand, and how much of each energy source. Part of this decision is made based on the resources available to states. Some states have a lot of potential solar power that they could harvest while others have more wind power. Some states are located in coal country, or are really close to an already established nuclear power plant. Each state therefore, has a different composition and mix of energy sources per year, meaning a unique percentage. We are interested in exploring how states have incorporated renewables into their energy mix over time and how the price of electricity in different states has change overtime. We believe that the percent of renewables in the energy mixes of states has increased over time just with increase in technology and decrease in prices of ways to harvest energy. We expect the electricity prices in these states with higher percent renewables, to decrease and elecetricy should be cheeper. This is because the cost of harnessing renewable energy should just be the upfront cost of infrastructure, instead of an added cost of purchasing the energy source such as mining coal or extracting raw natural gas. Therefore, we are curious if a the percentage of renewables is related to energy price, and whether the increase in renewables is related to a decrease in price. 
+"),
+                   h5("Data Collection", align = "center"),
+                            p("Price of electricity over time : 
+Link
+From US Energy Information Administration
+Percent renewables over time
+Link
+EPA eGrid
+
+We used data from two sources in this exploration. The first dataset we looked at was how the price of electricity over time in three different sectors: Residential, Industrial and Commercial. We found this data in a large dataset on the US Energy Information Administration page as a downloadable spreadsheet. We were able to clean it in r and select the prices that we were interested in looking at and the dates we were interested in. The second dataset that explored was the percent of renewable energy, per state, per year. This started as 11 different datasets foun on the EPA eGrid webpage. On their website, they have a dataset per year with all the states information including the column on energy mix percent renewable. We were able to download 11 years of data between 2004 and 2020, clean each one in r and combine them together into a long dataset of each state, per year, and their percent of energy generated that was renewable. Finally, we were able to combine these two datasets by state and by year.
+"),
+                   h5("Analysis", align = "center"),
+                            p("
+Based on this piece of preliminary organization, we cannot confidently state that higher percentages of renewables lead to decrease in electricity prices. This takeaway is easily observed by following the case of California, one of the US’ leaders in renewable energy. If you select 2004 as your initial year, you can see that renewable energy and electricity prices are higher than average and that renewable energy is negatively correlated with energy prices in the bottom figure. This holds mostly true for 2019, where electricity price is clearly increasing along with percent renewables. The simple fit line plot shows an apparent  minor positive correlation, yet it also demonstrates poor statistical significance. From a much less technical point of view, the 3rd figure demonstrates a mostly consistently rising price in electricity, across sectors, for all states, despite significant increases in renewable energy mix. Finally, it is worth noting that these figures, as they are designed for visual interpretation, lack the necessary specificity to return meaningful results. These figures are better suited to understanding the fact that there is no strict and obvious correlation between these two systems, observing the way their values change spatially, and coming to understand that electricity prices have been rising consistently for many years but at differing rates across sectors. 
+")),
+                          
                    tabPanel("Analysis",
                             titlePanel("Analysis"),
                             sidebarLayout(

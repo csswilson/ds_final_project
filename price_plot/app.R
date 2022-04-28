@@ -194,11 +194,6 @@ price_by_renewables <- price_by_renewables %>%
 states_map <- map_data("state")
 
 ui <- fluidPage(
-  sliderInput("Year", 
-              "Year",
-              min = 2004,
-              max=2019,
-             value = c(2004,2019), sep = "") ,
   selectInput("State", 
               "State",
               multiple = TRUE,
@@ -211,11 +206,11 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$priceplot <- renderPlot({
-  sector_prices %>% 
+  sector_prices %>%
     filter(State==input$State,
            Sector==input$Sector) %>% 
     ggplot() +
-    geom_line(aes(x = Year, y = Price)) +
+    geom_line(aes(x = Year, y = Price, group = State, color = State)) +
     theme_minimal()
   })
 }

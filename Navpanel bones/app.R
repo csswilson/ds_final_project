@@ -205,10 +205,14 @@ ui <- navbarPage("My Application",
                               sidebarPanel(style = "position:fixed;width:inherit;",
                                            selectInput("Year", 
                                                        "Year", 
-                                                       choices = c(2004,2005,2007,2009,2010,2012,2014,2016,2017,2018,2019)),
+                                                       choices = c(2004,2005,2007,2009,2010,2012,2014,2016,2018,2019)),
                                            radioButtons("Sector", "Electricity Sector", 
                                                         choices = c("Commercial", "Residential", "Industrial"),
                                                         selected = "Residential"),
+                                           selectInput("State", 
+                                                       "State",
+                                                       multiple = TRUE,
+                                                       choices = unique(sector_prices$State),selected = "AK")
                               ),
                               mainPanel(
                                 h1("Renewable Energy and Electricity Prices in the US", align = "center"),
@@ -218,7 +222,9 @@ ui <- navbarPage("My Application",
                                 #       ),
                                 plotOutput('renewable_map'), 
                                 plotOutput('price_map'),
-                                plotOutput("renewable_plot"),
+                                plotOutput(outputId = "priceplot"),
+                                plotOutput("renewable_plot")
+                              
                               )
                             )
                               ),
@@ -258,6 +264,15 @@ server <- function(input, output){
                                   scale_fill_continuous(low = "slategray1" , high = "slategray"),
                                 height = 400, width = 600
   )
+  
+  output$priceplot <- renderPlot({
+    sector_prices %>% 
+      filter(State==input$State,
+             Sector==input$Sector) %>% 
+      ggplot() +
+      geom_line(aes(x = Year, y = Price)) +
+      theme_minimal()
+  })
   
   output$renewable_plot <- renderPlot(
     price_by_renewables %>% 

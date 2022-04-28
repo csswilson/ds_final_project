@@ -266,12 +266,14 @@ server <- function(input, output){
   )
   
   output$priceplot <- renderPlot({
-    sector_prices %>% 
+    sector_prices %>%
       filter(State==input$State,
              Sector==input$Sector) %>% 
       ggplot() +
-      geom_line(aes(x = Year, y = Price)) +
-      theme_minimal()
+      geom_line(aes(x = Year, y = Price, group = State, color = State)) +
+      theme_minimal()+
+      labs(title = "Price by Sector", x="",y="")
+
   })
   
   output$renewable_plot <- renderPlot(

@@ -199,22 +199,27 @@ ui <- navbarPage("My Application",
                             p("Methods and Analysis"),
                             p("Conclusdion and Results")),
                    tabPanel("Analysis",
-                            style = "position:fixed;width:inherit;",
+                            titlePanel("Analysis"),
+                            sidebarLayout(
+                              sidebarPanel(style = "position:fixed;width:inherit;",
                                            selectInput("Year", 
                                                        "Year", 
                                                        choices = c(2004,2005,2007,2009,2010,2012,2014,2016,2017,2018,2019)),
                                            radioButtons("Sector", "Electricity Sector", 
                                                         choices = c("Commercial", "Residential", "Industrial"),
                                                         selected = "Residential"),
-                                         
-                                             h1("Renewable Energy and Electricity Prices in the US", align = "center"),
-                                             h3("Do higher percentages of renewables lead to a decrease in energy price in the US?",  align = "center"),
-                                             #       fluidRow(
-                                             #         splitLayout(cellWidths = c("50%", "50%"), plotOutput('renewable_map'), plotOutput('price_map'))
-                                             #       ),
-                                             plotOutput('renewable_map'), 
-                                             plotOutput('price_map'),
-                                             plotOutput("renewable_plot")
+                              ),
+                              mainPanel(
+                                h1("Renewable Energy and Electricity Prices in the US", align = "center"),
+                                h3("Do higher percentages of renewables lead to a decrease in energy price in the US?",  align = "center"),
+                                #       fluidRow(
+                                #         splitLayout(cellWidths = c("50%", "50%"), plotOutput('renewable_map'), plotOutput('price_map'))
+                                #       ),
+                                plotOutput('renewable_map'), 
+                                plotOutput('price_map'),
+                                plotOutput("renewable_plot"),
+                              )
+                            )
                               ),
 
                             

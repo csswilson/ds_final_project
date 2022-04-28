@@ -19,17 +19,14 @@ ui <- fluidPage(
                             p("Methods and Analysis"),
                             p("Conclusdion and Results")),
                    tabPanel("Analysis",
-                            
-                    
-                            sidebarLayout(
-                              sidebarPanel(style = "position:fixed;width:inherit;",
+                            style = "position:fixed;width:inherit;",
                                            selectInput("Year", 
                                                        "Year", 
                                                        choices = c(2004,2005,2007,2009,2010,2012,2014,2016,2017,2018,2019)),
                                            radioButtons("Sector", "Electricity Sector", 
                                                         choices = c("Commercial", "Residential", "Industrial"),
                                                         selected = "Residential"),
-                                           mainPanel(
+                                         
                                              h1("Renewable Energy and Electricity Prices in the US", align = "center"),
                                              h3("Do higher percentages of renewables lead to a decrease in energy price in the US?",  align = "center"),
                                              #       fluidRow(
@@ -45,7 +42,7 @@ ui <- fluidPage(
                    tabPanel("Extra")
                    
                    
-  ))))
+  )
 
 server <- function(input, output){
   

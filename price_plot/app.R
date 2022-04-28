@@ -203,11 +203,9 @@ ui <- fluidPage(
               "State",
               multiple = TRUE,
               choices = unique(sector_prices$State),selected = "AK"),
-              radioButtons("Sector", "Electricity Sector", 
+  radioButtons("Sector", "Electricity Sector", 
                            choices = c("Commercial", "Residential", "Industrial"),
                            selected = "Residential"),            
-              
-  submitButton(text = "Create my plot!"),
   plotOutput(outputId = "priceplot")
 )
 

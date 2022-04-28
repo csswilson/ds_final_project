@@ -7,6 +7,7 @@
   library(gganimate)
   library(ggmap) 
   library(rsconnect)
+  library(lubridate)
 
 # Data cleaning 
 
@@ -230,12 +231,12 @@ server <- function(input, output){
   
   
   
-  output$renewables_map <-renderPlot(price_by_renewables %>% 
+  output$renewable_map <-renderPlot(price_by_renewables %>% 
                                       filter(Sector == input$Sector,
                                              Year == input$Year) %>%        
                                       ggplot() +
                                       geom_map(map = states_map,
-                                               aes(map_id = states_map$region,
+                                               aes(map_id = region,
                                                    fill = Percent)) +
                                       expand_limits(x = states_map$long, y = states_map$lat) + 
                                       theme_map() +
@@ -249,7 +250,7 @@ server <- function(input, output){
                                          Year == input$Year) %>%        
                                   ggplot() +
                                   geom_map(map = states_map,
-                                           aes(map_id = states_map$region,
+                                           aes(map_id = region,
                                                fill = Price)) +
                                   expand_limits(x = states_map$long, y = states_map$lat) + 
                                   theme_map() +
@@ -266,7 +267,7 @@ server <- function(input, output){
       geom_point() +
       stat_cor( aes( label = paste(..rr.label.., ..p.label.., sep = "*`,`~"))) +
       theme_minimal() +
-      #geom_smooth(se = FALSE, method = "lm", color = "darkgreen") +
+      geom_smooth(se = FALSE, method = "lm", color = "darkgreen") +
       labs(title = "Percent Renewable Mix per Price", y = "$ / BTU", x = "%")
   )
   

@@ -259,12 +259,20 @@ ui <- navbarPage("Data Science",
                                   has higher compositions of renewable energy, but more interestingly, so do South Dakota and Idaho."),
                                 h4("Renewable Energy Over Time"),
                                 plotOutput("renewableplot"),
+                                br(),
+                                br(),
                                 h4("Electricity Price Over Space"),
                                 plotOutput('price_map'),
+                                br(),
+                                br(),
                                 h4("Electricity Price Over Time"),
                                 plotOutput(outputId = "priceplot"),
+                                br(),
+                                br(),
                                 h4("Electricity Price and Renewable Energy"),
                                 plotOutput("final_plot"),
+                                br(),
+                                br(),
                                 h4("Analysis", align = "center"),
                                 p("Based on this piece of preliminary organization, we cannot confidently state that higher percentages of 
                                 renewables lead to decrease in electricity prices. This takeaway is easily observed by following the case of
@@ -304,7 +312,7 @@ server <- function(input, output){
                                       theme_map() +
                                       labs(title = "Percent Renewable Energy Mix per Year", fill = "Percent") +
                                       scale_fill_continuous(low = "#edf6b2" , high = "#1c5f07"),
-                                    height = 400, width = 600
+                                    height = 500, width = 750
   )
   
   output$renewableplot <- renderPlot({
@@ -329,7 +337,7 @@ server <- function(input, output){
                                   theme_map() +
                                   labs(title = "Electricity Price per Year", fill = "Price\n$ / BTU") +
                                   scale_fill_continuous(low = "slategray1" , high = "slategray"),
-                                height = 400, width = 600
+                                height = 500, width = 750
   )
   
   output$priceplot <- renderPlot({

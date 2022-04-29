@@ -194,7 +194,7 @@ price_by_renewables <- price_by_renewables %>%
 states_map <- map_data("state")
 
 # STart Shiny app
-ui <- navbarPage("Data Science",
+ui <- navbarPage("Data Science Final",
                  tags$style(type = 'text/css', 
                             HTML(".container-fluid > .nav > li > 
                         a[data-value='Written Summary'] {background-color: grey; color:black}",
@@ -246,7 +246,7 @@ ui <- navbarPage("Data Science",
                                            selectInput("State", 
                                                        "State",
                                                        multiple = TRUE,
-                                                       choices = unique(sector_prices$State),selected = "AK")
+                                                       choices = unique(price_by_renewables$State),selected = "AK")
                               ),
                               mainPanel(
                                 h1("Renewable Energy and Electricity Prices in the US", align = "center"),
@@ -268,7 +268,7 @@ ui <- navbarPage("Data Science",
                                 br(),
                                 h4("Electricity Price Over Space"),
                                 plotOutput('price_map'),
-                                p("\n This map demonstrates the distribution of electrivity prices across the US and is editable by year. 
+                                p("\n This map demonstrates the distribution of electricity prices across the US and is editable by year. 
                                 When making large change between the earliest dates and the most recent, you'll notice that generally, prices on the East Coast have dropped from
                                 their high values in the early 2000's while prices have more steadily increase along the West Coast."),
                                 br(),
@@ -278,15 +278,17 @@ ui <- navbarPage("Data Science",
                                 p("\n Stacking states on top of each enables us to observe the difference in changing prices over time. The most novel 
                                 takeway from this chart is that resedential prices remain the most costly nearly entirely across all time in all states. 
                                 This makes sense from the perspective of bulk buying. Industry and Commercial powers have much greater buying power as they are single entities 
-                                consuming massive amounts of energy."),
+                                consuming massive amounts of energy. Addidtionally, prices seem to increase over time for most states, just at different maginitudes."),
                                 br(),
                                 br(),
                                 h4("Electricity Price and Renewable Energy"),
                                 plotOutput("final_plot"),
-                                p("\n The trend produced by this equation output are mostly consistent across sectors The industriald sector has
-                                the least steeply sloping fitted lines of all sectors but that notwithstanding, the sign of the change remains the same.
+                                p("\n The trends produced by this equation output are mostly consistent across sectors The industrial sector has
+                                the least steeply sloping fitted lines of all sectors but that not with standing, the sign of the change remains the same.
                                 It is difficult to come away from using this chart with any difinitive convictions on what exactly is driving energy prices.
-                                Rather, the interest comes from the ability to compare across relatively large difference in time, and across sector"), 
+                                Rather, the interest comes from the ability to compare across relatively large difference in time, and across sector. Overall, 
+                                  those states that have a higher composition of renewables in theri energy mix, do not necessarily have lower electricity prices. 
+                                  This is true across time in the US as seen from p values that are not low enough to dicern a trend and low R squared values."), 
                                 br(),
                                 br(),
                                 h4("Analysis", align = "center"),
@@ -294,10 +296,10 @@ ui <- navbarPage("Data Science",
                                 renewables lead to decrease in electricity prices. This takeaway is easily observed by following the case of
                                 California, one of the US’ leaders in renewable energy. If you select 2004 as your initial year, you can see 
                                 that renewable energy and electricity prices are higher than average and that renewable energy is negatively 
-                                correlated with energy prices in the bottom figure. This holds mostly true for 2019, where electricity price 
+                                related with energy prices in the bottom figure (although not significantly). This holds mostly true for 2019, where electricity price 
                                 is clearly increasing along with percent renewables. The simple fit line plot shows an apparent  minor positive 
                                 correlation, yet it also demonstrates poor statistical significance. From a much less technical point of view, 
-                                the 3rd figure demonstrates a mostly consistently rising price in electricity, across sectors, for all states, 
+                                the Electricy Price Over Time figure demonstrates a mostly consistently rising price in electricity, across sectors, for all states, 
                                 despite significant increases in renewable energy mix. Finally, it is worth noting that these figures, as they 
                                 are designed for visual interpretation, lack the necessary specificity to return meaningful results. These figures 
                                 are better suited to understanding the fact that there is no strict and obvious correlation between these two 
@@ -328,15 +330,15 @@ server <- function(input, output){
                                       theme_map() +
                                       labs(title = "Percent Renewable Energy Mix per Year", fill = "Percent") +
                                       scale_fill_continuous(low = "#edf6b2" , high = "#1c5f07"),
-                                    height = 500, width = 750
+                                    height = 400, width = 600
   )
   
   output$renewableplot <- renderPlot({
     price_by_renewables %>%
-      filter(State==input$State,
-             Sector==input$Sector) %>% 
-      ggplot() +
-      geom_line(aes(x = Year, y = Percent, group = State, color = State)) +
+      filter(State==input$State) %>% 
+      ggplot(aes(x = Year, y = Percent)) +
+      geom_point(aes(color = State)) +
+      geom_line(aes(group = State, color = State)) +
       theme_minimal()+
       labs(title = "Percent Renewable Energy Mix per State", x="",y="%")
     
@@ -353,7 +355,7 @@ server <- function(input, output){
                                   theme_map() +
                                   labs(title = "Electricity Price per Year", fill = "Price\n$ / BTU") +
                                   scale_fill_continuous(low = "slategray1" , high = "slategray"),
-                                height = 500, width = 750
+                                height = 400, width = 600
   )
   
   output$priceplot <- renderPlot({

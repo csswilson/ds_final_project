@@ -259,18 +259,34 @@ ui <- navbarPage("Data Science",
                                   has higher compositions of renewable energy, but more interestingly, so do South Dakota and Idaho."),
                                 h4("Renewable Energy Over Time"),
                                 plotOutput("renewableplot"),
+                                p("\n In this plot you can see just how different states are in their commitment to the green transition. 
+                                West Virginia, for example, has yet to break 5%, while North Dakota is above 30%. 
+                                The disparities in these figures are particularly interesting given that they do not necessarily fall along traditional political boundaries.
+                                This plot helps put into clear view the specific differences that are crowded out by the above spatial perspective. "
+                                  ),
                                 br(),
                                 br(),
                                 h4("Electricity Price Over Space"),
                                 plotOutput('price_map'),
+                                p("\n This map demonstrates the distribution of electrivity prices across the US and is editable by year. 
+                                When making large change between the earliest dates and the most recent, you'll notice that generally, prices on the East Coast have dropped from
+                                their high values in the early 2000's while prices have more steadily increase along the West Coast."),
                                 br(),
                                 br(),
                                 h4("Electricity Price Over Time"),
                                 plotOutput(outputId = "priceplot"),
+                                p("\n Stacking states on top of each enables us to observe the difference in changing prices over time. The most novel 
+                                takeway from this chart is that resedential prices remain the most costly nearly entirely across all time in all states. 
+                                This makes sense from the perspective of bulk buying. Industry and Commercial powers have much greater buying power as they are single entities 
+                                consuming massive amounts of energy."),
                                 br(),
                                 br(),
                                 h4("Electricity Price and Renewable Energy"),
                                 plotOutput("final_plot"),
+                                p("\n The trend produced by this equation output are mostly consistent across sectors The industriald sector has
+                                the least steeply sloping fitted lines of all sectors but that notwithstanding, the sign of the change remains the same.
+                                It is difficult to come away from using this chart with any difinitive convictions on what exactly is driving energy prices.
+                                Rather, the interest comes from the ability to compare across relatively large difference in time, and across sector"), 
                                 br(),
                                 br(),
                                 h4("Analysis", align = "center"),

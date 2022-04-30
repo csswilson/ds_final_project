@@ -271,3 +271,8 @@ renewable_map
 
 
 ## Electricity Price vs. Percent Renewables
+
+```{r}
+library(maps)
+```
+

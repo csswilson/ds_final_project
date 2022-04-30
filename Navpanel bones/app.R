@@ -8,6 +8,8 @@
   library(ggmap) 
   library(rsconnect)
   library(lubridate)
+  library(maps)
+  library(sp)
 
 # Data cleaning 
 
@@ -193,7 +195,7 @@ price_by_renewables <- price_by_renewables %>%
 
 states_map <- map_data("state")
 
-# STart Shiny app
+# Start Shiny app
 ui <- navbarPage("Data Science Final",
                  tags$style(type = 'text/css', 
                             HTML(".container-fluid > .nav > li > 
